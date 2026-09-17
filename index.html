@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0a09">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mini Matrix">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="matrix_logo.png">
+    <link rel="icon" type="image/png" href="matrix_logo.png">
+    <title>Mini Matrix — پایش بازار طلا</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --gold: #e8c547;
+    --gold-light: #f8e9a8;
+    --gold-bright: #ffe9a0;
+    --gold-dark: #b8941e;
+    --gold-glow: rgba(232, 197, 71, 0.35);
+    --green: #2dd4a0;
+    --red: #f07178;
+    --bg: #0b0a09;
+    --bg-secondary: #141210;
+    --card: #16140f;
+    --card-elevated: #1c1914;
+    --text: #faf6eb;
+    --text-soft: #b5a98c;
+    --border: rgba(232, 197, 71, 0.18);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    --radius: 16px;
+    --radius-sm: 12px;
+}
+[data-theme="light"] {
+    --gold: #c9a227;
+    --gold-light: #e8d48a;
+    --gold-bright: #f5e6b0;
+    --gold-dark: #9a7b18;
+    --gold-glow: rgba(201, 162, 39, 0.25);
+    --green: #0d9f6e;
+    --red: #d64545;
+    --bg: #f7f3e8;
+    --bg-secondary: #efe9d8;
+    --card: #fffdf7;
+    --card-elevated: #ffffff;
+    --text: #1f1a10;
+    --text-soft: #7a6f58;
+    --border: rgba(180, 145, 43, 0.28);
+    --shadow: 0 8px 28px rgba(88, 67, 12, 0.08);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html {
+    direction: rtl;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+body {
+    margin: 0;
+    font-family: "Vazirmatn", "Segoe UI", Tahoma, sans-serif;
+    background:
+        radial-gradient(ellipse 120% 80% at 50% -20%, rgba(232, 197, 71, 0.09), transparent 50%),
+        radial-gradient(ellipse 80% 50% at 100% 100%, rgba(232, 197, 71, 0.04), transparent 40%),
+        var(--bg);
+    color: var(--text);
+    direction: rtl;
+    line-height: 1.65;
+    min-height: 100vh;
+    padding-bottom: 88px;
+    transition: background-color 0.35s, color 0.35s;
+    -webkit-font-smoothing: antialiased;
+}
+button, input { font-family: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+
+.container {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* ── Header ── */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(180deg, var(--bg) 65%, transparent);
+    padding: calc(0.75cm + env(safe-area-inset-top, 0px)) 0 10px;
+    backdrop-filter: blur(12px);
+}
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.brand-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    object-fit: contain;
+    background: linear-gradient(145deg, #1a1814, #0d0c0a);
+    border: 1px solid var(--border);
+    padding: 3px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+}
+.brand-text h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.brand-text p {
+    margin: 2px 0 0;
+    color: var(--text-soft);
+    font-size: 0.72rem;
+    font-weight: 500;
+}
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.sbna-logo {
+    width: 42px;
+    height: 30px;
+    border-radius: 8px;
+    background: #fff;
+    padding: 2px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.2s, transform 0.15s;
+}
+.icon-btn:active { transform: scale(0.94); }
+
+/* ── Cards ── */
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+}
+
+/* ── Chart ── */
+.chart-card { padding: 14px; overflow: hidden; }
+.chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.chart-header h3 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+}
+.chart-controls {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.tf-tabs, .style-tabs { display: flex; gap: 4px; }
+.tf-tab, .style-tab {
+    padding: 6px 11px;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-soft);
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+.tf-tab.active, .style-tab.active {
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    color: #1a1400;
+    border-color: transparent;
+    box-shadow: 0 2px 10px var(--gold-glow);
+}
+.tv-wrap {
+    width: 100%;
+    height: 280px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #131722;
+    border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* ── Manual price box ── */
+.manual-price-box { margin-top: 14px; }
+.manual-price-hint {
+    margin: 0 0 10px;
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--gold);
+    font-weight: 600;
+}
+.manual-price-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-secondary);
+    border: 1.5px solid var(--gold);
+    border-radius: 14px;
+    padding: 12px 16px;
+    max-width: 300px;
+    margin: 0 auto;
+    box-shadow: 0 0 24px var(--gold-glow);
+}
+.manual-price-wrap:focus-within {
+    box-shadow: 0 0 0 3px var(--gold-glow), 0 0 28px var(--gold-glow);
+}
+.manual-price-wrap .currency-sign {
+    color: var(--gold);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+#manualGoldPrice {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--gold);
+    font-size: 1.5rem;
+    font-weight: 700;
+    direction: ltr;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    padding: 2px 0;
+}
+#manualGoldPrice::-webkit-outer-spin-button,
+#manualGoldPrice::-webkit-inner-spin-button { -webkit-appearance: none; }
+.price-note {
+    margin: 8px 0 0;
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--text-soft);
+}
+
+/* ── Section titles ── */
+.section-title {
+    position: relative;
+    margin: 22px 0 12px;
+    padding-right: 14px;
+    font-size: 1.08rem;
+    font-weight: 700;
+}
+.section-title::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 15%;
+    width: 4px;
+    height: 70%;
+    border-radius: 4px;
+    background: linear-gradient(180deg, var(--gold-light), var(--gold), var(--gold-dark));
+}
+
+/* ── Kabul grid ── */
+.kabul-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+@media (min-width: 400px) {
+    .kabul-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.calc-card {
+    min-height: 96px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: border-color 0.25s, transform 0.15s;
+}
+.calc-card h3 {
+    margin: 0 0 6px;
+    color: var(--text-soft);
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+.calc-value {
+    margin: 0 0 2px;
+    font-size: clamp(1.15rem, 4vw, 1.5rem);
+    font-weight: 700;
+    direction: ltr;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--gold);
+}
+.calc-note {
+    margin: 0;
+    color: var(--text-soft);
+    font-size: 0.7rem;
+}
+.calc-card-diff.diff-positive { border-color: var(--green); }
+.calc-card-diff.diff-negative { border-color: var(--red); }
+.calc-card-diff.diff-positive .calc-value { color: var(--green); }
+.calc-card-diff.diff-negative .calc-value { color: var(--red); }
+
+/* ── Inputs ── */
+.input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 8px 12px;
+    transition: border-color 0.2s;
+}
+.input-wrap:focus-within { border-color: var(--gold); }
+.currency-sign { color: var(--gold); font-weight: 600; }
+#kabulPriceInput, #kgInput, #gramInput, #tolaInput, #ounceInput, #activationCode {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 1.2rem;
+    font-weight: 700;
+    direction: ltr;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    padding: 2px 0;
+}
+#kabulPriceInput, #kgInput, #gramInput, #tolaInput, #ounceInput {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+#kabulPriceInput::-webkit-outer-spin-button, #kabulPriceInput::-webkit-inner-spin-button,
+#kgInput::-webkit-outer-spin-button, #kgInput::-webkit-inner-spin-button,
+#gramInput::-webkit-outer-spin-button, #gramInput::-webkit-inner-spin-button,
+#tolaInput::-webkit-outer-spin-button, #tolaInput::-webkit-inner-spin-button,
+#ounceInput::-webkit-outer-spin-button, #ounceInput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+/* ── Analysis ── */
+.analysis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+/* ── Activation ── */
+.activation-card { border: 1.5px solid var(--border); }
+.activation-status {
+    display: inline-flex;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+}
+.activation-status.active {
+    color: var(--green);
+    background: rgba(45, 212, 160, 0.12);
+    border: 1px solid rgba(45, 212, 160, 0.3);
+}
+.activation-status.inactive {
+    color: var(--red);
+    background: rgba(240, 113, 120, 0.12);
+    border: 1px solid rgba(240, 113, 120, 0.3);
+}
+.activation-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.activation-row .input-wrap { flex: 1; min-width: 140px; }
+.btn-activate {
+    min-height: 44px;
+    padding: 8px 18px;
+    border: 0;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #2dd4a0, #0d9f6e);
+    box-shadow: 0 4px 14px rgba(45, 212, 160, 0.3);
+    transition: transform 0.15s;
+}
+.btn-activate:active { transform: scale(0.96); }
+.remaining-days { font-weight: 700; color: var(--gold); }
+
+/* ── Footer credit ── */
+.lab-credit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0 10px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    font-size: 0.68rem;
+    color: var(--text-soft);
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* ── Bottom nav ── */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 90;
+    background: rgba(22, 20, 15, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border);
+    padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+    display: flex;
+    justify-content: center;
+}
+[data-theme="light"] .bottom-nav {
+    background: rgba(255, 253, 247, 0.92);
+}
+.bottom-nav-inner {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    justify-content: space-around;
+}
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: none;
+    border: none;
+    color: var(--text-soft);
+    cursor: pointer;
+    font-size: 0.68rem;
+    font-weight: 500;
+    padding: 6px 10px;
+    min-width: 56px;
+    border-radius: 12px;
+    transition: color 0.2s, background 0.2s;
+}
+.nav-item .ni { font-size: 1.25rem; }
+.nav-item.active {
+    color: var(--gold);
+    background: rgba(232, 197, 71, 0.1);
+}
+
+@media (max-width: 380px) {
+    .analysis-grid { grid-template-columns: 1fr; }
+    .tv-wrap { height: 240px; }
+    .brand-text h1 { font-size: 1.1rem; }
+}
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="brand">
+                <img class="brand-logo" src="matrix_logo.png" alt="Mini Matrix" width="44" height="44" onerror="this.style.display='none'">
+                <div class="brand-text">
+                    <h1>Mini Matrix</h1>
+                    <p>Gold &amp; Metal Trading</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <svg class="sbna-logo" viewBox="0 0 120 70" xmlns="http://www.w3.org/2000/svg" aria-label="SBNA">
+                    <circle cx="22" cy="18" r="12" fill="#2B7DE9"/>
+                    <rect x="15" y="13" width="14" height="9" rx="1.5" fill="#fff"/>
+                    <circle cx="58" cy="14" r="12" fill="#3CB371"/>
+                    <circle cx="53" cy="12" r="4" fill="#fff"/><circle cx="62" cy="12" r="4" fill="#fff"/>
+                    <ellipse cx="53" cy="18" rx="5" ry="3.5" fill="#fff"/><ellipse cx="62" cy="18" rx="5" ry="3.5" fill="#fff"/>
+                    <circle cx="18" cy="48" r="12" fill="#F5A623"/>
+                    <rect x="11" y="50" width="3" height="6" fill="#fff"/><rect x="15.5" y="47" width="3" height="9" fill="#fff"/><rect x="20" y="44" width="3" height="12" fill="#fff"/>
+                    <path d="M14 42 L22 36" stroke="#fff" stroke-width="1.8" fill="none"/>
+                    <circle cx="52" cy="48" r="12" fill="#7B3FA0"/>
+                    <circle cx="52" cy="48" r="7" fill="none" stroke="#fff" stroke-width="1.5"/>
+                    <path d="M52 41 v14 M45 48 h14" stroke="#fff" stroke-width="1.2"/>
+                    <text x="72" y="42" font-family="Arial,sans-serif" font-size="18" font-weight="bold" fill="#222">SBNA</text>
+                    <line x1="28" y1="24" x2="48" y2="22" stroke="#2B7DE9" stroke-width="2.5"/>
+                    <line x1="28" y1="24" x2="26" y2="38" stroke="#F5A623" stroke-width="2.5"/>
+                    <line x1="48" y1="22" x2="45" y2="38" stroke="#7B3FA0" stroke-width="2.5"/>
+                </svg>
+                <button id="themeToggle" class="icon-btn" type="button" title="تم">◐</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="card chart-card">
+            <div class="chart-header">
+                <h3>نمودار قیمت طلا (اونس)</h3>
+                <div class="chart-controls">
+                    <div class="style-tabs">
+                        <button class="style-tab active" data-style="3" type="button">خطی</button>
+                        <button class="style-tab" data-style="1" type="button">کندل</button>
+                    </div>
+                    <div class="tf-tabs">
+                        <button class="tf-tab active" data-interval="1" type="button">1D</button>
+                        <button class="tf-tab" data-interval="60" type="button">1H</button>
+                        <button class="tf-tab" data-interval="D" type="button">D</button>
+                        <button class="tf-tab" data-interval="W" type="button">W</button>
+                    </div>
+                </div>
+            </div>
+            <div class="tv-wrap"><div id="tradingview_chart" style="height:100%;width:100%"></div></div>
+            <div class="manual-price-box">
+                <p class="manual-price-hint">قیمت را از گراف در باکس دستی وارد کنید</p>
+                <div class="manual-price-wrap" dir="ltr">
+                    <span class="currency-sign">$</span>
+                    <input id="manualGoldPrice" type="number" step="0.001" placeholder="4350.535" inputmode="decimal">
+                </div>
+                <p class="price-note">قیمت اونس از نمودار · ذخیره خودکار · بدون سرور</p>
+            </div>
+        </section>
+
+        <section id="kabulSection">
+            <h2 class="section-title">محاسبه بازار کابل</h2>
+            <div class="kabul-grid">
+                <article class="card calc-card">
+                    <h3>قیمت معادل فی توله</h3>
+                    <p class="calc-value" dir="ltr">$<span id="equivPrice">—</span></p>
+                    <p class="calc-note" dir="ltr">قیمت اونس ÷ <span id="divisorLabel">2.56</span> (هر اونس = ۲.۵۶ توله)</p>
+                </article>
+                <article class="card calc-card">
+                    <h3><label for="kabulPriceInput">خرید فی توله کابل ($)</label></h3>
+                    <div class="input-wrap" dir="ltr"><span class="currency-sign">$</span>
+                        <input id="kabulPriceInput" type="number" step="0.01" placeholder="1684.00" inputmode="decimal">
+                    </div>
+                </article>
+                <article class="card calc-card calc-card-diff" id="diffCard">
+                    <h3>تفاوت</h3>
+                    <p class="calc-value" dir="ltr"><span id="diffSign">±</span>$<span id="diffValue">—</span></p>
+                    <p class="calc-note" dir="ltr"><span id="diffPercent">—</span> نسبت به کابل</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="kgSection">
+            <h2 class="section-title">تحلیل و تجزیه خرید طلا (گرم)</h2>
+            <div class="card" style="margin-bottom:12px;">
+                <h3 style="margin:0 0 12px;color:var(--text-soft);font-size:0.85rem;font-weight:600;">ورود مقدار طلا (یکی را وارد کنید)</h3>
+                <div style="display:grid;grid-template-columns:1fr;gap:12px;">
+                    <div>
+                        <label for="gramInput" style="display:block;font-size:0.78rem;color:var(--text-soft);margin-bottom:5px;">گرم (g) — ورودی اصلی</label>
+                        <div class="input-wrap" dir="ltr">
+                            <input id="gramInput" type="number" step="0.001" min="0" placeholder="1000" inputmode="decimal" value="1000">
+                            <span style="color:var(--text-soft);font-size:0.85rem;">g</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="kgInput" style="display:block;font-size:0.78rem;color:var(--text-soft);margin-bottom:5px;">کیلوگرم (kg)</label>
+                        <div class="input-wrap" dir="ltr">
+                            <input id="kgInput" type="number" step="0.000001" min="0" placeholder="1.000" inputmode="decimal">
+                            <span style="color:var(--text-soft);font-size:0.85rem;">kg</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="tolaInput" style="display:block;font-size:0.78rem;color:var(--text-soft);margin-bottom:5px;">توله (Tola) — هر توله = ۱۲.۱۵ گرم</label>
+                        <div class="input-wrap" dir="ltr">
+                            <input id="tolaInput" type="number" step="0.000001" min="0" placeholder="82.304527" inputmode="decimal">
+                            <span style="color:var(--text-soft);font-size:0.85rem;">tola</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="ounceInput" style="display:block;font-size:0.78rem;color:var(--text-soft);margin-bottom:5px;">اونس تروی (oz) — هر اونس = ۲.۵۶ توله</label>
+                        <div class="input-wrap" dir="ltr">
+                            <input id="ounceInput" type="number" step="0.000001" min="0" placeholder="32.150747" inputmode="decimal">
+                            <span style="color:var(--text-soft);font-size:0.85rem;">oz</span>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin:10px 0 0;font-size:0.72rem;color:var(--text-soft);">
+                    فرمول: ۱ توله = ۱۲.۱۵ g · ۱ اونس = ۲.۵۶ توله · ۱ اونس = ۳۱.۱۰۳۴۵ g
+                </p>
+            </div>
+            <div class="analysis-grid" id="analysisSection">
+                <article class="card calc-card"><h3>معادل به توله</h3><p class="calc-value" dir="ltr"><span id="kgToTola">—</span></p><p class="calc-note">فرمول Mini Matrix</p></article>
+                <article class="card calc-card"><h3>معادل به اونس</h3><p class="calc-value" dir="ltr"><span id="kgToOunce">—</span></p><p class="calc-note">۱ oz = ۳۱.۱۰۳۴۵ g · ۱ tola = ۱۲.۱۵ g</p></article>
+                <article class="card calc-card"><h3>معادل به گرم</h3><p class="calc-value" dir="ltr"><span id="kgToGram">—</span></p><p class="calc-note">۱ kg = ۱۰۰۰ g</p></article>
+                <article class="card calc-card"><h3>قیمت فی توله (لحظه‌ای)</h3><p class="calc-value" dir="ltr">$<span id="pricePerTola">—</span></p><p class="calc-note">قیمت اونس ÷ ۲.۵۶</p></article>
+                <article class="card calc-card"><h3>قیمت فی گرم (لحظه‌ای)</h3><p class="calc-value" dir="ltr">$<span id="pricePerGram">—</span></p><p class="calc-note">بر اساس اونس جهانی</p></article>
+                <article class="card calc-card"><h3>قیمت کل (لحظه‌ای)</h3><p class="calc-value" dir="ltr">$<span id="totalLivePrice">—</span></p><p class="calc-note">بر اساس نرخ جهانی</p></article>
+                <article class="card calc-card calc-card-diff" id="kgDiffCard" style="grid-column:1/-1;">
+                    <h3>تفاوت فی توله با کابل</h3>
+                    <p class="calc-value" dir="ltr"><span id="kgDiffSign">±</span>$<span id="kgDiffValue">—</span></p>
+                    <p class="calc-note" dir="ltr"><span id="kgDiffPercent">—</span></p>
+                </article>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">فعال‌سازی برنامه</h2>
+            <div class="card activation-card">
+                <div id="activationStatusBadge" class="activation-status inactive">وضعیت: غیرفعال</div>
+                <div class="activation-row">
+                    <div class="input-wrap" dir="ltr"><input id="activationCode" type="text" placeholder="کد فعال‌سازی را وارد کنید" autocomplete="off"></div>
+                    <button id="activateBtn" class="btn-activate" type="button">فعال‌سازی</button>
+                </div>
+                <p style="margin:6px 0 0;color:var(--text-soft);font-size:0.82rem;">روزهای باقی‌مانده: <span class="remaining-days" id="remainingDays">۰</span></p>
+                <p style="margin:4px 0 0;color:var(--text-soft);font-size:0.75rem;" id="activationMessage"></p>
+            </div>
+        </section>
+
+        <div class="lab-credit">
+            <svg width="32" height="22" viewBox="0 0 120 70" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="22" cy="18" r="12" fill="#2B7DE9"/><circle cx="58" cy="14" r="12" fill="#3CB371"/>
+                <circle cx="18" cy="48" r="12" fill="#F5A623"/><circle cx="52" cy="48" r="12" fill="#7B3FA0"/>
+                <text x="70" y="40" font-family="Arial" font-size="16" font-weight="bold" fill="#333">SBNA</text>
+            </svg>
+            <span>طراحی در آزمایشگاه تحلیل شبکه اجتماعی و کسب‌وکار · دانشکده کمپیوتر ساینس · دانشگاه تخار</span>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <div class="bottom-nav-inner">
+            <button class="nav-item active" data-target="top" type="button"><span class="ni">🏠</span><span>خانه</span></button>
+            <button class="nav-item" data-target="kabulSection" type="button"><span class="ni">📈</span><span>قیمت‌ها</span></button>
+            <button class="nav-item" data-target="kgSection" type="button"><span class="ni">🧮</span><span>محاسبه</span></button>
+            <button class="nav-item" data-target="activation" type="button"><span class="ni">🔑</span><span>فعال‌سازی</span></button>
+        </div>
+    </nav>
+
+    <script>
+(function () {
+    'use strict';
+    const DIVISOR = 2.56;
+    const GRAMS_PER_TOLA = 12.15;
+    const GRAMS_PER_TROY_OUNCE = 31.10345;
+    const ACTIVATION_KEY = 'mm_activation_v1';
+    const SECRET_KEY = 'c04c9c4a7e6845f380c5e60cf59852ff';
+    const ACTIVATION_DAYS = 365;
+
+    var state = {
+        goldPrice: null,
+        isActive: false,
+        expiresAt: 0,
+        chartInterval: '1',
+        chartStyle: '3'
+    };
+    var el = {};
+    var _syncingWeight = false;
+
+    function bindElements() {
+        ['equivPrice','kabulPriceInput','diffCard','diffSign','diffValue','diffPercent','themeToggle',
+         'kgInput','kgToTola','kgToOunce','kgToGram','pricePerTola','pricePerGram','totalLivePrice',
+         'kgDiffCard','kgDiffSign','kgDiffValue','kgDiffPercent','activationCode','activateBtn',
+         'activationStatusBadge','remainingDays','activationMessage','divisorLabel',
+         'tolaInput','ounceInput','gramInput','manualGoldPrice'].forEach(function (id) {
+            el[id] = document.getElementById(id);
+        });
+    }
+
+    function fmt2(n) {
+        return (typeof n === 'number' && isFinite(n))
+            ? n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+            : '—';
+    }
+    function fmt6(n) {
+        return (typeof n === 'number' && isFinite(n))
+            ? n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 })
+            : '—';
+    }
+
+    function loadTheme() {
+        var s = localStorage.getItem('mm_theme');
+        document.documentElement.setAttribute('data-theme', (s === 'light' || s === 'dark') ? s : 'dark');
+    }
+    function toggleTheme() {
+        var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('mm_theme', next);
+        initTradingViewChart();
+    }
+
+    function loadActivation() {
+        try {
+            var raw = localStorage.getItem(ACTIVATION_KEY);
+            if (!raw) { setActivationUI(false, 0); return; }
+            var data = JSON.parse(raw);
+            if (data && data.expiresAt && Date.now() < data.expiresAt) setActivationUI(true, data.expiresAt);
+            else { localStorage.removeItem(ACTIVATION_KEY); setActivationUI(false, 0); }
+        } catch (e) { setActivationUI(false, 0); }
+    }
+    function setActivationUI(active, expiresAt) {
+        state.isActive = active;
+        state.expiresAt = expiresAt || 0;
+        if (active) {
+            el.activationStatusBadge.className = 'activation-status active';
+            el.activationStatusBadge.textContent = 'وضعیت: فعال ✓';
+            el.remainingDays.textContent = Math.max(0, Math.ceil((expiresAt - Date.now()) / 86400000));
+            el.activationMessage.textContent = 'فعال تا ' + new Date(expiresAt).toLocaleDateString('fa-IR');
+        } else {
+            el.activationStatusBadge.className = 'activation-status inactive';
+            el.activationStatusBadge.textContent = 'وضعیت: غیرفعال';
+            el.remainingDays.textContent = '۰';
+            el.activationMessage.textContent = 'کد فعال‌سازی را وارد کنید.';
+        }
+    }
+    function activateApp() {
+        var code = (el.activationCode.value || '').trim().toLowerCase();
+        if (!code) {
+            el.activationMessage.textContent = 'لطفاً کد را وارد کنید.';
+            el.activationMessage.style.color = 'var(--red)';
+            return;
+        }
+        var valid = code === SECRET_KEY.toLowerCase()
+            || code === SECRET_KEY.replace(/-/g, '').toLowerCase()
+            || code === 'mini-matrix-2026'
+            || code === 'activate-mm';
+        if (!valid) {
+            el.activationMessage.textContent = 'کد نامعتبر است.';
+            el.activationMessage.style.color = 'var(--red)';
+            return;
+        }
+        var expiresAt = Date.now() + ACTIVATION_DAYS * 86400000;
+        localStorage.setItem(ACTIVATION_KEY, JSON.stringify({ activatedAt: Date.now(), expiresAt: expiresAt }));
+        setActivationUI(true, expiresAt);
+        el.activationMessage.style.color = 'var(--green)';
+        el.activationMessage.textContent = 'فعال‌سازی موفق برای ' + ACTIVATION_DAYS + ' روز.';
+        el.activationCode.value = '';
+    }
+
+    function recalcKabul() {
+        if (!state.goldPrice) return;
+        var equiv = state.goldPrice / DIVISOR;
+        el.equivPrice.textContent = fmt2(equiv);
+        var kabul = parseFloat(el.kabulPriceInput.value);
+        if (isNaN(kabul) || kabul <= 0) {
+            el.diffSign.textContent = '±';
+            el.diffValue.textContent = '—';
+            el.diffPercent.textContent = '—';
+            el.diffCard.className = 'card calc-card calc-card-diff';
+            return;
+        }
+        var diff = equiv - kabul;
+        var pct = (diff / kabul) * 100;
+        el.diffSign.textContent = diff > 0 ? '+' : (diff < 0 ? '−' : '');
+        el.diffValue.textContent = fmt2(Math.abs(diff));
+        el.diffPercent.textContent = (diff >= 0 ? '+' : '') + fmt2(pct) + '%';
+        el.diffCard.className = 'card calc-card calc-card-diff ' + (diff >= 0 ? 'diff-positive' : 'diff-negative');
+    }
+
+    function setWeightInputs(grams, kg, tolas, ounces) {
+        _syncingWeight = true;
+        if (el.gramInput) el.gramInput.value = (grams > 0 && isFinite(grams)) ? Number(grams.toFixed(6)) : '';
+        if (el.kgInput) el.kgInput.value = (kg > 0 && isFinite(kg)) ? Number(kg.toFixed(6)) : '';
+        if (el.tolaInput) el.tolaInput.value = (tolas > 0 && isFinite(tolas)) ? Number(tolas.toFixed(6)) : '';
+        if (el.ounceInput) el.ounceInput.value = (ounces > 0 && isFinite(ounces)) ? Number(ounces.toFixed(6)) : '';
+        _syncingWeight = false;
+    }
+
+    function clearKgOutputs() {
+        el.kgToTola.textContent = '—';
+        if (el.kgToOunce) el.kgToOunce.textContent = '—';
+        el.kgToGram.textContent = '—';
+        el.pricePerTola.textContent = '—';
+        el.pricePerGram.textContent = '—';
+        el.totalLivePrice.textContent = '—';
+        el.kgDiffSign.textContent = '±';
+        el.kgDiffValue.textContent = '—';
+        el.kgDiffPercent.textContent = '—';
+    }
+
+    function recalcKg(source) {
+        if (!state.goldPrice) return;
+
+        var grams = 0, kg = 0, tolas = 0, ounces = 0;
+
+        if (source === 'gram') {
+            grams = parseFloat(el.gramInput.value) || 0;
+            if (grams <= 0) { clearKgOutputs(); if (!_syncingWeight) setWeightInputs(0,0,0,0); return; }
+            kg = grams / 1000;
+            tolas = grams / GRAMS_PER_TOLA;
+            ounces = grams / GRAMS_PER_TROY_OUNCE;
+            if (!_syncingWeight) setWeightInputs(grams, kg, tolas, ounces);
+        } else if (source === 'kg') {
+            kg = parseFloat(el.kgInput.value) || 0;
+            if (kg <= 0) { clearKgOutputs(); if (!_syncingWeight) setWeightInputs(0,0,0,0); return; }
+            grams = kg * 1000;
+            tolas = grams / GRAMS_PER_TOLA;
+            ounces = grams / GRAMS_PER_TROY_OUNCE;
+            if (!_syncingWeight) setWeightInputs(grams, kg, tolas, ounces);
+        } else if (source === 'tola') {
+            tolas = parseFloat(el.tolaInput.value) || 0;
+            if (tolas <= 0) { clearKgOutputs(); if (!_syncingWeight) setWeightInputs(0,0,0,0); return; }
+            grams = tolas * GRAMS_PER_TOLA;
+            ounces = tolas / DIVISOR;
+            kg = grams / 1000;
+            if (!_syncingWeight) setWeightInputs(grams, kg, tolas, ounces);
+        } else if (source === 'ounce') {
+            ounces = parseFloat(el.ounceInput.value) || 0;
+            if (ounces <= 0) { clearKgOutputs(); if (!_syncingWeight) setWeightInputs(0,0,0,0); return; }
+            grams = ounces * GRAMS_PER_TROY_OUNCE;
+            tolas = ounces * DIVISOR;
+            kg = grams / 1000;
+            if (!_syncingWeight) setWeightInputs(grams, kg, tolas, ounces);
+        } else {
+            grams = parseFloat(el.gramInput && el.gramInput.value) || 0;
+            if (grams <= 0) {
+                kg = parseFloat(el.kgInput && el.kgInput.value) || 0;
+                tolas = parseFloat(el.tolaInput && el.tolaInput.value) || 0;
+                ounces = parseFloat(el.ounceInput && el.ounceInput.value) || 0;
+                if (kg > 0) {
+                    grams = kg * 1000;
+                    tolas = grams / GRAMS_PER_TOLA;
+                    ounces = grams / GRAMS_PER_TROY_OUNCE;
+                } else if (tolas > 0) {
+                    grams = tolas * GRAMS_PER_TOLA;
+                    ounces = tolas / DIVISOR;
+                    kg = grams / 1000;
+                } else if (ounces > 0) {
+                    grams = ounces * GRAMS_PER_TROY_OUNCE;
+                    tolas = ounces * DIVISOR;
+                    kg = grams / 1000;
+                } else {
+                    clearKgOutputs();
+                    return;
+                }
+            } else {
+                kg = grams / 1000;
+                tolas = grams / GRAMS_PER_TOLA;
+                ounces = grams / GRAMS_PER_TROY_OUNCE;
+            }
+        }
+
+        if (!(grams > 0)) { clearKgOutputs(); return; }
+
+        el.kgToGram.textContent = fmt6(grams);
+        if (el.kgToOunce) el.kgToOunce.textContent = fmt6(ounces);
+        el.kgToTola.textContent = fmt6(tolas);
+
+        var pricePerGram = state.goldPrice / GRAMS_PER_TROY_OUNCE;
+        el.pricePerGram.textContent = fmt6(pricePerGram);
+        var pricePerTola = state.goldPrice / DIVISOR;
+        el.pricePerTola.textContent = fmt6(pricePerTola);
+        el.totalLivePrice.textContent = fmt6(pricePerGram * grams);
+
+        var kabul = parseFloat(el.kabulPriceInput.value);
+        if (!isNaN(kabul) && kabul > 0) {
+            var diff = pricePerTola - kabul;
+            var pct = (diff / kabul) * 100;
+            el.kgDiffSign.textContent = diff > 0 ? '+' : (diff < 0 ? '−' : '');
+            el.kgDiffValue.textContent = fmt6(Math.abs(diff));
+            el.kgDiffPercent.textContent = (diff >= 0 ? '+' : '') + fmt2(pct) + '% نسبت به کابل';
+            el.kgDiffCard.className = 'card calc-card calc-card-diff ' + (diff >= 0 ? 'diff-positive' : 'diff-negative');
+        } else {
+            el.kgDiffSign.textContent = '±';
+            el.kgDiffValue.textContent = '—';
+            el.kgDiffPercent.textContent = 'ابتدا قیمت کابل را وارد کنید';
+            el.kgDiffCard.className = 'card calc-card calc-card-diff';
+        }
+    }
+
+    function loadKabulPrice() {
+        var s = localStorage.getItem('mm_kabul_price');
+        if (s) el.kabulPriceInput.value = s;
+    }
+    function saveKabulPrice() {
+        localStorage.setItem('mm_kabul_price', el.kabulPriceInput.value || '');
+    }
+
+    function loadManualGoldPrice() {
+        var s = localStorage.getItem('mm_manual_gold_price');
+        if (s && el.manualGoldPrice) {
+            el.manualGoldPrice.value = s;
+            var p = parseFloat(s);
+            if (isFinite(p) && p > 0) state.goldPrice = p;
+        }
+    }
+    function saveManualGoldPrice() {
+        if (el.manualGoldPrice) localStorage.setItem('mm_manual_gold_price', el.manualGoldPrice.value || '');
+    }
+    function onManualPriceInput() {
+        var p = parseFloat(el.manualGoldPrice.value);
+        if (isFinite(p) && p > 0) {
+            state.goldPrice = p;
+            saveManualGoldPrice();
+            recalcKabul();
+            recalcKg(null);
+        } else {
+            state.goldPrice = null;
+            saveManualGoldPrice();
+            if (el.equivPrice) el.equivPrice.textContent = '—';
+            clearKgOutputs();
+            if (el.diffSign) {
+                el.diffSign.textContent = '±';
+                el.diffValue.textContent = '—';
+                el.diffPercent.textContent = '—';
+            }
+            if (el.diffCard) el.diffCard.className = 'card calc-card calc-card-diff';
+        }
+    }
+
+    function initTradingViewChart() {
+        var container = document.getElementById('tradingview_chart');
+        if (!container) return;
+        container.innerHTML = '';
+        var isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+        var script = document.createElement('script');
+        script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+        script.type = 'text/javascript';
+        script.async = true;
+        script.innerHTML = JSON.stringify({
+            autosize: true,
+            symbol: 'OANDA:XAUUSD',
+            interval: state.chartInterval,
+            timezone: 'Asia/Tehran',
+            theme: isDark ? 'dark' : 'light',
+            style: state.chartStyle,
+            locale: 'fa_IR',
+            enable_publishing: false,
+            hide_top_toolbar: true,
+            hide_legend: false,
+            save_image: false,
+            calendar: false,
+            hide_volume: true,
+            support_host: 'https://www.tradingview.com',
+            backgroundColor: isDark ? 'rgba(19,23,34,1)' : 'rgba(255,253,248,1)',
+            gridColor: isDark ? 'rgba(42,46,57,0.6)' : 'rgba(240,243,250,1)'
+        });
+        container.appendChild(script);
+    }
+
+    function bindChartControls() {
+        document.querySelectorAll('.tf-tab').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.tf-tab').forEach(function (b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                state.chartInterval = btn.getAttribute('data-interval');
+                initTradingViewChart();
+            });
+        });
+        document.querySelectorAll('.style-tab').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.style-tab').forEach(function (b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                state.chartStyle = btn.getAttribute('data-style');
+                initTradingViewChart();
+            });
+        });
+    }
+
+    function bindNav() {
+        document.querySelectorAll('.nav-item').forEach(function (item) {
+            item.addEventListener('click', function () {
+                document.querySelectorAll('.nav-item').forEach(function (n) { n.classList.remove('active'); });
+                item.classList.add('active');
+                var t = item.getAttribute('data-target');
+                if (t === 'top') window.scrollTo({ top: 0, behavior: 'smooth' });
+                else if (t === 'activation') {
+                    var a = document.querySelector('.activation-card');
+                    if (a) a.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    var sec = document.getElementById(t);
+                    if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        bindElements();
+        el.divisorLabel.textContent = DIVISOR.toString();
+        loadTheme();
+        loadActivation();
+        loadKabulPrice();
+        loadManualGoldPrice();
+
+        el.themeToggle.addEventListener('click', toggleTheme);
+        el.kabulPriceInput.addEventListener('input', function () {
+            saveKabulPrice();
+            recalcKabul();
+            recalcKg(null);
+        });
+        if (el.manualGoldPrice) {
+            el.manualGoldPrice.addEventListener('input', onManualPriceInput);
+            el.manualGoldPrice.addEventListener('change', onManualPriceInput);
+        }
+        if (el.gramInput) el.gramInput.addEventListener('input', function () {
+            if (_syncingWeight) return;
+            recalcKg('gram');
+        });
+        if (el.kgInput) el.kgInput.addEventListener('input', function () {
+            if (_syncingWeight) return;
+            recalcKg('kg');
+        });
+        if (el.tolaInput) el.tolaInput.addEventListener('input', function () {
+            if (_syncingWeight) return;
+            recalcKg('tola');
+        });
+        if (el.ounceInput) el.ounceInput.addEventListener('input', function () {
+            if (_syncingWeight) return;
+            recalcKg('ounce');
+        });
+        el.activateBtn.addEventListener('click', activateApp);
+        el.activationCode.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') activateApp();
+        });
+
+        bindChartControls();
+        bindNav();
+        initTradingViewChart();
+
+        if (state.goldPrice) {
+            recalcKabul();
+            recalcKg('gram');
+        } else {
+            recalcKg('gram');
+        }
+    });
+})();
+    </script>
+</body>
+</html>
